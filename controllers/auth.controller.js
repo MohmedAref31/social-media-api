@@ -29,6 +29,9 @@ export const loginSuccess = (req, res) => {
 export const loginFaild = (req, res) => {
   res.status(401).json(resFormat("fail", "email or password is wrong"));
 };
+export const googleSignInFaild = (req, res) => {
+  res.status(401).json(resFormat("fail", "google sign in failed"));
+};
 export const logout = (req, res) => {
   req.logout((err) => {
     if (err) return next(err);

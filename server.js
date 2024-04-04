@@ -6,6 +6,7 @@ import morgan from "morgan";
 import passport from "passport";
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
+import compression from "compression";
 import path from "path";
 import { fileURLToPath } from "url";
 import { usePassport } from "./config/passport.config.js"
@@ -18,7 +19,9 @@ const __dirname = path.dirname(__filename);
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
-// const dbConnection = connectDB
+
+
+app.use(compression())
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));

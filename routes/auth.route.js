@@ -5,6 +5,7 @@ import {
   logout,
   loginSuccess,
   loginFaild,
+  googleSignInFaild,
 } from "../controllers/auth.controller.js";
 import upload from "../middlewares/uploadFile.js";
 import {
@@ -22,11 +23,25 @@ router.post(
 router.post(
   "/login",
   loginValidator,
-  passport.authenticate("local", { failureRedirect: "/api/auth/loginFaild" }),
+  passport.authenticate("local", {
+    failureRedirect: "/api/v1/auth/loginFaild",
+  }),
   loginSuccess
 );
 
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["email", "profile"] })
+);
+router.get(
+  "/google/redirect",
+  passport.authenticate("google", {
+    failureRedirect: "/api/v1/auth/googleFaild",
+  }),
+  loginSuccess
+);
 router.use("/loginFaild", loginFaild);
+router.use("/googleFaild", googleSignInFaild);
 router.post("/logout", logout);
 
 export default router;
