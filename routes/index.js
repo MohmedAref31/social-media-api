@@ -10,6 +10,7 @@ router.use("/auth", authRoutes);
 router.use("/users", usersRoutes);
 router.use("/friend-request", friendRequestRoutes)
 router.use("/posts", postRoutes);
+
 router.all("*", (req, res,next)=>{
     next(new ApiError(`sorry there is no such a route ${req.originalUrl}`, "fail", 404))
 })

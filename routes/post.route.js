@@ -7,7 +7,7 @@ import { addComment, createPost, deleteComment, deletePost, getComments, getPost
 const router = express.Router();
 
 router.get("/",getPostsFeedValidate,getPostsFeed)
-router.get('/:postId/likes/users', getlikedUsers)
+router.get('/:postId/likes', getlikedUsers)
 router.get("/:postId/comments", getComments)
 router.use(isLoggedIn)
 router.post("/", upload.single("picture"), createPostValidate,createPost );
@@ -20,4 +20,5 @@ router.post("/:postId/comments",addCommentValidate,addComment);
 router.post("/:postId/comments/:commentId/likes",toggleCommentLike)
 router.patch("/:postId/comments/:commentId",updateCommentValidate, updateComment)
 router.delete("/:postId/comments/:commentId", deleteComment)
+
 export default router;
