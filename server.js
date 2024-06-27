@@ -13,7 +13,8 @@ import { usePassport } from "./config/passport.config.js"
 import { connectDB } from "./config/db.config.js";
 import appRoutes from "./routes/index.js";
 import {errorHandler} from "./middlewares/errorHandler.js";
-
+import removeDocumentsAfterFixedTime from "./utiles/removeDocumentsAfterFixedTime.utiles.js"
+import Status from "./models/status.model.js"
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
@@ -56,8 +57,13 @@ app.use('/api/v1', appRoutes)
 //-| error handling |-//
 app.use(errorHandler)
 
+// -| automatic operations |-//
+removeDocumentsAfterFixedTime(Status)
 
 app.listen(port,  () => {
   console.log(`app listining on port ${port}`);
    connectDB(process.env.DB_URI);
 });
+
+
+export default app
