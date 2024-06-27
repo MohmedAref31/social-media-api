@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Comment from "../models/comment.model.js";
-import { addComment, deleteComment, getComments } from "../utiles/comment.utiles.js";
+import { addComment, deleteComment, getComments } from "./comment.factory.js";
 import Post from "../models/post.model.js";
 import Status from "../models/status.model.js";
 import { resFormat } from "../utiles/responseFormat.utiles.js";

@@ -1,8 +1,8 @@
 import asyncHandler from "express-async-handler";
 import Comment from "../models/comment.model.js";
-import { resFormat } from "./responseFormat.utiles.js";
-import { ApiError } from "./errorClass.js";
-import { objectSanitizer } from "./sanitization.js";
+import { resFormat } from "../utiles/responseFormat.utiles.js";
+import { ApiError } from "../utiles/errorClass.js";
+import { objectSanitizer } from "../utiles/sanitization.js";
 
 export const addComment = (Model) =>
   asyncHandler(async (req, res, next) => {
@@ -50,7 +50,6 @@ export const deleteComment = (Model) =>
         new ApiError(`there is no such document with this id ${modelId}`, "fail", 404)
       );
 
-      console.log(model)
     await Comment.deleteOne({ _id: commentId });
 
     res.json(resFormat("", "comment deleted successfully"));
