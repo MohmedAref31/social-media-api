@@ -7,6 +7,7 @@ const removeDocumentsAfterFixedTime = (
   filter = {}
 ) => {
   let prevDate = new Date(new Date() - deleteAfter);
+  
   try {
     let interval = setInterval(async() => {
       console.log("interval");

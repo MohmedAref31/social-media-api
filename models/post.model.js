@@ -1,31 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const commentSchema = new mongoose.Schema(
-  {
-    user: {
-      type: Schema.ObjectId,
-      required: true,
-      ref: "User",
-    },
-    content: {
-      type: String,
-      required: true,
-    },
-    likes: {
-      type: Map,
-      of: {
-        type: Schema.ObjectId,
-        ref: "User",
-      },
-      default: new Map(),
-    },
-  },
-  { timestamps: true }
-);
-commentSchema.virtual("likesNumber").get(function () {
-  const likes = this.likes;
-  return likes.size;
-});
+
 
 const postSchema = new mongoose.Schema(
   {
@@ -46,14 +21,18 @@ const postSchema = new mongoose.Schema(
       default: new Map(),
     },
 
-    comments: [commentSchema],
+    comments: [
+      {
+        type:Schema.Types.ObjectId,
+        ref:"Comment"
+      }
+    ],
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
 postSchema.virtual("commentsNumber").get(function () {
-  const comments = this.comments;
-  return comments.length;
+  return this.comments.length;
 });
 postSchema.virtual("likesNumber").get(function () {
   const likes = this.likes;

@@ -1,10 +1,10 @@
 import express from "express";
 import { isLoggedIn } from "../middlewares/auth.middleware.js";
-// import upload from "../middlewares/uploadFile.js";
 import upload from "../middlewares/uploadFileToMemory.js";
 import saveStatusFileFromMemory from "../middlewares/saveStatusFileFromMemory.js";
 import { createStatusValidate } from "../utiles/validators/status.validators.js";
 import {
+  addCommentToStatus,
   addLikeToStatus,
   addViewToStatus,
   createStatus,
@@ -31,7 +31,8 @@ router
   .delete(isLoggedIn, deleteStatus)
   .get(isLoggedIn, getStatusById);
 
-router.post("/:statusId/likes", isLoggedIn, addLikeToStatus);
-router.post("/:statusId/views", isLoggedIn, addViewToStatus);
+// router.post("/:statusId/likes", isLoggedIn, addLikeToStatus);
+// router.post("/:statusId/views", isLoggedIn, addViewToStatus);
+// router.post("/:statusId/comments", isLoggedIn, addCommentToStatus);
 
 export default router;

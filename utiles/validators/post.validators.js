@@ -38,19 +38,13 @@ export const updatePostValidate = [
 ];
 
 export const deletePostValidate = [
-  check("postId", "invalid post id")
-    .isMongoId()
-    .custom(async (postId, { req }) => {
-      const post = await Post.findById(postId);
-      if (!post) throw new Error("something went wrong while deleting post");
-      if (post.user.toString() !== req.user._id.toString())
-        throw new Error("sorry you can't delete this post");
-    }),
+  check("id", "invalid document id")
+    .isMongoId(),
   validate,
 ];
 
 export const addCommentValidate = [
-  check("postId", "invalid post id id").isMongoId(),
+  check("id", "invalid document id").isMongoId(),
   check("content").notEmpty().withMessage("comment can't be empty").isString(),
   validate
 ];

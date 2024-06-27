@@ -3,6 +3,7 @@ import Post from "../models/post.model.js";
 import { resFormat } from "../utiles/responseFormat.utiles.js";
 import { ApiError } from "../utiles/errorClass.js";
 import { objectSanitizer } from "../utiles/sanitization.js";
+import Comment from "../models/comment.model.js";
 
 export const createPost = asyncHandler(async (req, res, next) => {
   const { location, content } = req.body;
@@ -160,115 +161,31 @@ export const getlikedUsers = asyncHandler(async (req, res, next) => {
   res.json(resFormat("", "", sanitizedLikes));
 });
 
-export const addComment = asyncHandler(async (req, res, next) => {
-  const { postId } = req.params;
+// export const addComment = asyncHandler(async (req, res, next) => {
+//   const { postId } = req.params;
+//   const post = await Post.findById(postId);
 
-  const post = await Post.findByIdAndUpdate(
-    postId,
+//   if (!post)
+//     return next(
+//       new ApiError(`there is no such post with id ${postId}`, "fail", 404)
+//     );
 
-    {
-      $push: { comments: { user: req.user._id, content: req.body.content } },
-    },
+//   const comment = await Comment.create({
+//     user: req.user._id,
+//     content: req.body.content,
+//   });
 
-    { new: true, runValidators: true }
-  );
+//   if (!comment)
+//     return next(
+//       new ApiError(`an error occurred while adding comment`, "error", 500)
+//     );
 
-  if (!post)
-    return next(
-      new ApiError("an error occured while adding the comment", "fail", 404)
-    );
+//   post.comments.push(comment._id);
 
-  console.log(post);
-  res.json(resFormat("", "comment added successfully"));
-});
+//   await post.save();
 
-export const deleteComment = asyncHandler(async (req, res, next) => {
-  const { postId, commentId } = req.params;
+//   res.json(resFormat("success", "comment added successfully", post.comments));
+// });
 
-  const post = await Post.findByIdAndUpdate(
-    postId,
-    {
-      $pull: { comments: { _id: commentId } },
-    },
-    { new: true }
-  );
 
-  if (!post)
-    return next(
-      new ApiError("an error occured while deleting the comment", "fail", 404)
-    );
-  res.json(resFormat("", "comment deleted successfully"));
-});
 
-export const updateComment = asyncHandler(async (req, res, next) => {
-  const { postId, commentId } = req.params;
-  console.log(postId, commentId);
-  const { content } = req.body;
-  const post = await Post.findById(postId);
-  if (!post)
-    return next(
-      new ApiError("an error occured while updating the comment", "fail", 404)
-    );
-
-  post.comments.forEach((comment) => {
-    if (comment._id.toString() === commentId) {
-      comment.content = content;
-      return;
-    }
-  });
-  await post.save();
-  res.json(resFormat("", "post updated successfully"));
-});
-
-export const getComments = asyncHandler(async (req, res, next) => {
-  let { page, limit } = req.query;
-
-  page = +page || 1;
-  limit = +limit || 10;
-  const skip = (page - 1) * limit;
-
-  const { postId } = req.params;
-
-  const post = await Post.findById(postId).populate(
-    "comments.user",
-    "firstName lastName profileImage"
-  );
-
-  let comments = post.comments.slice(skip, limit);
-
-  comments = comments.map((comment) =>
-    objectSanitizer(
-      comment,
-      "_id",
-      "content",
-      "user",
-      "likesNumber",
-      "createdAt",
-      "updatedAt"
-    )
-  );
-
-  res.json(resFormat("", "", comments));
-});
-
-export const toggleCommentLike = asyncHandler(async (req, res, next) => {
-  const { postId, commentId } = req.params;
-  const userId = req.user._id;
-
-  const post = await Post.findById(postId);
-
-  if (!post)
-    next(new ApiError("an error occured while toggle like", "fail", 404));
-
-  post.comments.forEach((comment) => {
-    if (comment._id.toString() === commentId) {
-      // console.log()
-      if (comment.likes.get(userId)) comment.likes.delete(userId);
-      else comment.likes.set(userId, userId);
-    }
-  });
-
-  await post.save();
-
-  res.json(resFormat("", "like toggeled successfully"));
-});
