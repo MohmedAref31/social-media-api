@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.use("/auth", authRoutes);
 router.use("/users", usersRoutes);
-router.use("/friend-request", friendRequestRoutes)
+router.use("/friend-requests", friendRequestRoutes)
 router.use("/posts", postRoutes);
 router.use("/status", statusRoutes);
 router.use('/comments', commentRoutes);

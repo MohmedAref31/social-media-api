@@ -40,8 +40,11 @@ router.get(
   }),
   loginSuccess
 );
+
+router.post("/logout", logout);
+
 router.use("/loginFaild", loginFaild);
 router.use("/googleFaild", googleSignInFaild);
-router.post("/logout", logout);
+
 
 export default router;

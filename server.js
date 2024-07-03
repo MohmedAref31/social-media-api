@@ -7,6 +7,7 @@ import passport from "passport";
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
 import compression from "compression";
+import swaggerUi from 'swagger-ui-express'
 import path from "path";
 import { fileURLToPath } from "url";
 import { usePassport } from "./config/passport.config.js"
@@ -15,6 +16,7 @@ import appRoutes from "./routes/index.js";
 import {errorHandler} from "./middlewares/errorHandler.js";
 import removeDocumentsAfterFixedTime from "./utiles/removeDocumentsAfterFixedTime.utiles.js"
 import Status from "./models/status.model.js"
+import { apiDoc } from "./docs/apidoc.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
@@ -54,6 +56,8 @@ app.use(passport.authenticate("session"))
 //-| mount routes |-//
 app.use('/api/v1', appRoutes)
 
+//-| docs |-//
+app.use('/docs',swaggerUi.serve, swaggerUi.setup(apiDoc) )
 //-| error handling |-//
 app.use(errorHandler)
 

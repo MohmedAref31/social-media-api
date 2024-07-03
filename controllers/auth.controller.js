@@ -21,7 +21,7 @@ export const register = asyncHndler(async (req, res) => {
 
   await user.save();
 
-  res.json(resFormat("", "register success", objectSanitizer(user,"_id", "firstName", "lastName", "email", "profileImage")));
+  res.status(201).json(resFormat("", "register success", objectSanitizer(user,"_id", "firstName", "lastName", "email", "profileImage")));
 });
 export const loginSuccess = (req, res) => {
   res.json(resFormat("", "login success", { user: objectSanitizer(req.user,"_id", "firstName", "lastName", "email", "profileImage", "friends")}));

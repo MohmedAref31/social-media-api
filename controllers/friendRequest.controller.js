@@ -13,7 +13,7 @@ export const getFriendRequests = asyncHandler(async (req, res, next) => {
   const friendRequests = await FriendRequest.find()
     .or([{ sender: id }, { receiver: id }])
     .populate("sender receiver", "firstName profileImage");
-  res.json(resFormat("", "", { friendRequests }));
+  res.json(resFormat("", "",  friendRequests ));
 });
 
 export const sendFriendRequest = asyncHandler(async (req, res, next) => {
@@ -35,9 +35,9 @@ export const cancelFriendRequest = asyncHandler(async (req, res, next) => {
   if (!friendRequest)
     return next(
       new ApiError(
-        "sorry we something went wrong while cancelling the request",
+        `there is no friend request with id ${requestId}` ,
         "fail",
-        400
+        404
       )
     );
 
