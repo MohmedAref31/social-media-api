@@ -18,6 +18,7 @@ export const addComment = (Model) =>
     const comment = await Comment.create({
       user: req.user._id,
       content: req.body.content,
+      postId:id
     });
 
     if (!comment)
@@ -30,7 +31,7 @@ export const addComment = (Model) =>
     await model.save();
 
     res.json(
-      resFormat("success", "comment added successfully", model.comments)
+      resFormat("success", "comment added successfully")
     );
   });
 export const deleteComment = (Model) =>

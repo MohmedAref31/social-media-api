@@ -37,21 +37,25 @@ const userSchema = new mongoose.Schema(
       default: "",
     },
     friends: [{ type: Schema.ObjectId, ref: "User" }],
-    location: String,
-    occupation: String,
-    viewedProfile: Number,
-    impressions: Number,
+    registerType: {
+      type: String,
+      enum: ["register", "google"],
+      default: "register",
+    },
+    passwordResetCode: String,
+    passwordResetCodeExpiresAt: Date,
+    passwordResetCodeverifiedExpiresAt: Date,
+    passwordResetCodeVerified: Boolean,
   },
   { timestamps: true }
 );
 
-userSchema.post("find", (docs)=>{
-  docs.forEach(doc=>{
-    if(doc.profileImage)
+userSchema.post("find", (docs) => {
+  docs.forEach((doc) => {
+    if (doc.profileImage)
       doc.profileImage = `${process.env.BASE_URL}${doc.profileImage}`;
-  })
-
-})
+  });
+});
 
 const User = mongoose.model("User", userSchema);
 

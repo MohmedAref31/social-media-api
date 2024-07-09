@@ -58,11 +58,14 @@ app.use('/api/v1', appRoutes)
 
 //-| docs |-//
 app.use('/docs',swaggerUi.serve, swaggerUi.setup(apiDoc) )
+
+// -| automatic operations |-//
+// removeDocumentsAfterFixedTime(Status)
+
 //-| error handling |-//
 app.use(errorHandler)
 
-// -| automatic operations |-//
-removeDocumentsAfterFixedTime(Status)
+
 
 app.listen(port,  () => {
   console.log(`app listining on port ${port}`);

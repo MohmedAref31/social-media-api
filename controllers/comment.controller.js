@@ -59,3 +59,52 @@ export const toggleCommentLike = asyncHandler(async (req, res, next) => {
 ** To Do **
 - add comment reply controller
 */
+
+export const replyOnComment = asyncHandler(async (req, res, next) => { 
+  const {commentId} = req.params;
+  const comment = await Comment.findById(commentId);
+  if(!comment) return next(new ApiError(`there is no such a comment with this id ${commentId}`, 'fail', 404));
+
+  const reply = await Comment.create({
+    user: req.user._id,
+    content: req.body.content,
+    postId:comment.postId,
+    parentComment:comment._id,
+    type:"reply",
+  });
+
+  if (!comment)
+    return next(
+      new ApiError(`an error occurred while adding a reply`, "error", 500)
+    );
+
+  comment.replies.push(reply._id);
+
+  await comment.save();
+
+  res.json(
+    resFormat("success", "replay added successfully")
+  );
+})
+
+export const deleteReply = asyncHandler(async(req, res, next)=>{
+  const {replyId} = req.params
+  const reply = await Comment.findById(replyId);
+
+  if(reply.user !== req.user._id) return next(new ApiError(`you are not allowed to delete this reply`, 'fail', 403) );
+
+  if(!reply) return next(new ApiError(`there is no reply with id ${replyId}`), 'fail', 404);
+
+  const parentComment = await Comment.findById(reply.parentComment)
+  
+  await Comment.deleteOne({_id:replyId})
+
+  if(parentComment.replies)
+      parentComment.replies = parentComment.replies.filter(r=> r.toString() !== replyId)
+
+  await parentComment.save()
+
+  res.json(resFormat("success", 'reply deleted successfully'))
+})
+
+

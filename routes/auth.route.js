@@ -6,6 +6,9 @@ import {
   loginSuccess,
   loginFaild,
   googleSignInFaild,
+  forgotPassword,
+  verifyResetCode,
+  resetPassword,
 } from "../controllers/auth.controller.js";
 import upload from "../middlewares/uploadFile.js";
 import {
@@ -46,5 +49,7 @@ router.post("/logout", logout);
 router.use("/loginFaild", loginFaild);
 router.use("/googleFaild", googleSignInFaild);
 
-
+router.post('/forgot-password', forgotPassword)
+router.post('/verify-reset-code', verifyResetCode)
+router.post('/reset-password', resetPassword)
 export default router;

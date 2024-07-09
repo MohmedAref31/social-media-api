@@ -29,6 +29,14 @@ const commentSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: "Comment",
         default:null,
+    },
+    postId:{
+      type:Schema.Types.ObjectId,
+      required:true,
+    },
+    type:{
+      type:String,
+      default:'comment',
     }
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }

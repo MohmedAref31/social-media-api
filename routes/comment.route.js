@@ -4,9 +4,11 @@ import {
   addPostComment,
   addStatusComment,
   deletePostComment,
+  deleteReply,
   deleteStatusComment,
   getPostComments,
   getStatusComments,
+  replyOnComment,
   toggleCommentLike,
   updateComment,
 } from "../controllers/comment.controller.js";
@@ -23,5 +25,7 @@ router.delete("/:modelId/statusComments/:commentId", deleteStatusComment);
 router.delete("/:modelId/postComments/:commentId", deletePostComment);
 
 router.post("/:commentId/likes", isLoggedIn, toggleCommentLike);
+router.post("/reply/:commentId", isLoggedIn, replyOnComment)
+router.delete('/reply/:replyId', isLoggedIn, deleteReply)
 
 export default router;
