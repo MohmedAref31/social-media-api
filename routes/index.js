@@ -5,6 +5,7 @@ import friendRequestRoutes from "./friendRequest.route.js"
 import postRoutes from "./post.route.js"
 import statusRoutes from "./status.route.js"
 import commentRoutes from './comment.route.js'
+import searchRoutes from './search.route.js'
 import { ApiError } from "../utiles/errorClass.js";
 const router = express.Router();
 
@@ -14,6 +15,7 @@ router.use("/friend-requests", friendRequestRoutes)
 router.use("/posts", postRoutes);
 router.use("/status", statusRoutes);
 router.use('/comments', commentRoutes);
+router.use('/search', searchRoutes)
 router.all("*", (req, res,next)=>{
     next(new ApiError(`sorry there is no such a route ${req.originalUrl}`, "fail", 404))
 })

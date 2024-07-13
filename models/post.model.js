@@ -31,6 +31,8 @@ const postSchema = new mongoose.Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
+postSchema.index({firstName:"text", lastName:"text"})
+
 postSchema.virtual("commentsNumber").get(function () {
   return this.comments.length;
 });

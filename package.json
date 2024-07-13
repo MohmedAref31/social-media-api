@@ -34,7 +34,9 @@
     "passport": "^0.7.0",
     "passport-google-oauth2": "^0.2.0",
     "passport-local": "^1.0.0",
+    "redis": "^4.6.15",
     "sib-api-v3-sdk": "^8.5.0",
+    "socket.io": "^4.7.5",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
