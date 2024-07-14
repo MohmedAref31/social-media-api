@@ -3,6 +3,7 @@ import Comment from "../models/comment.model.js";
 import { resFormat } from "../utiles/responseFormat.utiles.js";
 import { ApiError } from "../utiles/errorClass.js";
 import { objectSanitizer } from "../utiles/sanitization.js";
+import { createNotification } from "../utiles/createNotification.utiles.js";
 
 export const addComment = (Model) =>
   asyncHandler(async (req, res, next) => {
@@ -18,7 +19,7 @@ export const addComment = (Model) =>
     const comment = await Comment.create({
       user: req.user._id,
       content: req.body.content,
-      postId:id
+      postId: id,
     });
 
     if (!comment)
@@ -30,9 +31,10 @@ export const addComment = (Model) =>
 
     await model.save();
 
-    res.json(
-      resFormat("success", "comment added successfully")
-    );
+    const notificationMsg = `${req.user.firstName} ${req.user.lastName} added comment on your post`;
+    createNotification(notificationMsg, model.user);
+
+    res.json(resFormat("success", "comment added successfully"));
   });
 export const deleteComment = (Model) =>
   asyncHandler(async (req, res, next) => {
@@ -41,14 +43,18 @@ export const deleteComment = (Model) =>
     const model = await Model.findByIdAndUpdate(
       modelId,
       {
-        $pull: { comments:  commentId  },
+        $pull: { comments: commentId },
       },
       { new: true }
     );
 
     if (!model)
       return next(
-        new ApiError(`there is no such document with this id ${modelId}`, "fail", 404)
+        new ApiError(
+          `there is no such document with this id ${modelId}`,
+          "fail",
+          404
+        )
       );
 
     await Comment.deleteOne({ _id: commentId });

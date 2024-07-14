@@ -4,6 +4,7 @@ import { ApiError } from "../utiles/errorClass.js";
 import { resFormat } from "../utiles/responseFormat.utiles.js";
 import { objectSanitizer } from "../utiles/sanitization.js";
 import { comparePassword, hashPassword } from "../utiles/password.utiles.js";
+import { createNotification } from "../utiles/createNotification.utiles.js";
 
 export const getUser = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
@@ -11,6 +12,7 @@ export const getUser = asyncHandler(async (req, res, next) => {
 
   if (!user)
     return next(new ApiError(`there is no user with id ${id}`, "fail", 400));
+  createNotification("notification for you ", id)
   res.json(
     resFormat(
       "success",

@@ -4,6 +4,7 @@ import { ApiError } from "../utiles/errorClass.js";
 import redisClient from "../config/redisClient.config.js";
 import { resFormat } from "../utiles/responseFormat.utiles.js";
 import Post from "../models/post.model.js";
+import { createNotification } from "../utiles/createNotification.utiles.js";
 
 const searchUsers = async (q) => {
   const regEx = new RegExp(`^.*${q}.*$`, "i");
