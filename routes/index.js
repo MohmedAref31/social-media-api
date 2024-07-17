@@ -7,7 +7,9 @@ import statusRoutes from "./status.route.js"
 import commentRoutes from './comment.route.js'
 import searchRoutes from './search.route.js'
 import notificationRoutes from "./notifications.route.js"
+import chatRoutes from "./chat.route.js"
 import { ApiError } from "../utiles/errorClass.js";
+import { isLoggedIn } from "../middlewares/auth.middleware.js";
 const router = express.Router();
 
 router.use("/auth", authRoutes);
@@ -18,6 +20,7 @@ router.use("/status", statusRoutes);
 router.use('/comments', commentRoutes);
 router.use('/search', searchRoutes)
 router.use('/notifications', notificationRoutes)
+router.use('/chat',chatRoutes )
 router.all("*", (req, res,next)=>{
     next(new ApiError(`sorry there is no such a route ${req.originalUrl}`, "fail", 404))
 })

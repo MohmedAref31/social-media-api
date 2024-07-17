@@ -8,7 +8,6 @@ const saveFileFromMemory = (req, res, next) => {
       console.log("hi1")
       const type = req.file.mimetype.split("/")[0];
       if (type !== "video" && type !== "image") return next();
-      console.log("hi2")
       const uniquePostfix = `${Date.now()}-${(Math.random() * 100).toString(
         32
       )} `;

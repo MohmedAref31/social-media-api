@@ -1,4 +1,4 @@
-import removeFile from "./removeFile.utiles.js";
+import removeFiles from "./removeFile.utiles.js";
 
 const removeDocumentsAfterFixedTime = (
   doc,
@@ -19,7 +19,7 @@ const removeDocumentsAfterFixedTime = (
             "automatic deletion succes deleted count : " + doc.deletedCount
           );
           docs.forEach((d)=>{
-            if(d.mediaUrl) removeFile(`public${d.mediaUrl}`);
+            if(d.mediaUrl) removeFiles(d.mediaUrl);
           })
         })
         .catch((e) => {

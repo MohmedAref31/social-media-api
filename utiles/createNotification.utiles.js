@@ -10,7 +10,9 @@ export const createNotification = async (msg, userId) => {
     notification
       .save()
       .then((n) => {
-        io.emit(`notification_${userId}`, msg);
+        const userSocket = onlineUsers.get(userId);
+        if(userSocket)
+        io.to(userSocket).emit(`notification`, msg);
       })
       .catch((err) => {
         console.log(err);

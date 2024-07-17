@@ -26,9 +26,6 @@ const server = http.createServer(app);
 const io = new ioServer(server);
 const port = process.env.PORT || 5000;
 
-io.on("connection",()=>{
-  console.log("socket connection established")
-})
 
 app.use(compression());
 app.use(express.json());
@@ -71,6 +68,20 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(apiDoc));
 
 //-| error handling |-//
 app.use(errorHandler);
+////////////////////
+
+global.onlineUsers = new Map();
+io.on("connection",(socket)=>{
+  global.chatSocket = socket;
+
+  socket.on("add_user", (userId)=>{
+    console.log(userId)
+    onlineUsers.set(userId, socket.id)
+    console.log(onlineUsers)
+  })
+  
+  console.log("socket connection established")
+})
 
 server.listen(port, () => {
   console.log(`app listining on port ${port}`);
