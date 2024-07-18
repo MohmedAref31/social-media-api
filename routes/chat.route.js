@@ -12,7 +12,7 @@ import { deleteMessage, getMessages, getChats, sendMessage, updateMessage } from
 const router = express.Router();
 
 router.post(
-  "/",
+  "/messages",
   isLoggedIn,
   upload.fields([{ name: "media", maxCount: 10 }]),
   sendMsgValidate,
@@ -20,8 +20,8 @@ router.post(
   sendMessage
 );
 router.get("/", isLoggedIn, getChats)
-router.get('/:otherUserId', isLoggedIn,getMsgsValidate, getMessages)
-router.route("/:msgId")
+router.get('/messages/:otherUserId', isLoggedIn,getMsgsValidate, getMessages)
+router.route("/messages/:msgId")
 .patch(isLoggedIn, updateMsgValidate, updateMessage)
 .delete(isLoggedIn, deleteMessage)
 
