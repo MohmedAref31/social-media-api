@@ -17,9 +17,9 @@ A social media APIs implemented with (Node.js, Express.js)
 ## Table of content
 - [Installation](#Installation)
 - [Usage](#Usage)
-- [Tech Stack](#Tech%20Stack)
+- [Tech Stack](#Tech-Stack)
 - [Features](#Features)
-- [Documentaion](#Documentaion)
+- [Documentation](#Documentation)
 ## Installation
 
 1-Clone the repo 
