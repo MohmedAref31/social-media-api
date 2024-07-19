@@ -20,6 +20,7 @@ A social media APIs implemented with (Node.js, Express.js)
 - [Tech Stack](#Tech-Stack)
 - [Features](#Features)
 - [Documentation](#Documentation)
+
 ## Installation
 
 1-Clone the repo 
@@ -52,6 +53,8 @@ BREVO_API_KEY = your brevo api key for sending emails
 REDIS_URL = your redis url ex(redis://127.0.0.1:6379)
 ```
 ## Usage
+
+**You must have redis installed on your machine**
 
 ```bash
 npm run dev
