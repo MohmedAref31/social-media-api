@@ -23,6 +23,11 @@ A social media APIs implemented with (Node.js, Express.js)
 
 ## Installation
 
+```Note
+    You must have redis installed on your machine or use redis cloud
+```
+**[Redis](https://redis.io)**
+
 1-Clone the repo 
 
 ```bash
@@ -117,7 +122,7 @@ npm run dev
     - the server send real-time notifications for users
 ## Documentation
 
-[Documentation](https://documenter.getpostman.com/view/29097873/2sA3kSnNfk)
+**[Documentation](https://documenter.getpostman.com/view/29097873/2sA3kSnNfk)**
 
 
 
