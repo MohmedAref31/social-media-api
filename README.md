@@ -23,10 +23,6 @@ A social media APIs implemented with (Node.js, Express.js)
 
 ## Installation
 
-```Note
-    You must have redis installed on your machine or use redis cloud
-```
-**[Redis](https://redis.io)**
 
 1-Clone the repo 
 
@@ -59,7 +55,10 @@ REDIS_URL = your redis url ex(redis://127.0.0.1:6379)
 ```
 ## Usage
 
-**You must have redis installed on your machine**
+```Note
+    You must have redis installed on your machine or use redis cloud
+```
+**[Redis](https://redis.io)**
 
 ```bash
 npm run dev
